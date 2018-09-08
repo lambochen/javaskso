@@ -1,7 +1,10 @@
 package com.chenlinghong.javaskso.controller;
 
+import com.chenlinghong.javaskso.controller.domain.User;
 import com.chenlinghong.javaskso.result.CodeMsg;
 import com.chenlinghong.javaskso.result.Result;
+import com.chenlinghong.javaskso.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -27,6 +30,9 @@ public class DemoController<string> {
 //        SpringApplication.run(DemoController.class,args);
 //    }
 
+    @Autowired
+    private IUserService userService;
+
     @GetMapping("/demo")
     @ResponseBody
     public String home(){
@@ -49,6 +55,12 @@ public class DemoController<string> {
     public String thymeleaf(Model model){
         model.addAttribute("name","SpringBoot");
         return "hello";
+    }
+
+    @GetMapping("/db/get")
+    @ResponseBody
+    public Result<User> dbGet(){
+        return Result.success(userService.getById(1));
     }
 
 }
