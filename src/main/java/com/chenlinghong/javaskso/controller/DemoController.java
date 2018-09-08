@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,8 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
  * Date: 18/09/08
  * Time: 21:49
  */
-@RestController
+//@RestController
 //@EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
+@Controller
 public class DemoController<string> {
 
 //    public static void main(String[] args) throws Exception{
@@ -41,6 +43,12 @@ public class DemoController<string> {
     @ResponseBody
     public Result<String> helloError(){
         return Result.error(CodeMsg.SERVER_ERROR);
+    }
+
+    @GetMapping("/thymeleaf")
+    public String thymeleaf(Model model){
+        model.addAttribute("name","SpringBoot");
+        return "hello";
     }
 
 }

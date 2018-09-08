@@ -31,7 +31,7 @@ public class CodeMsg implements Serializable {
     public static CodeMsg SERVER_ERROR = new CodeMsg(500100,"服务端异常");
 
     //登录模块 5002XX
-    
+
 
 
 }
