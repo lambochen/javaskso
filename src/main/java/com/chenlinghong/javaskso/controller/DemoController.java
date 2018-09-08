@@ -1,5 +1,7 @@
 package com.chenlinghong.javaskso.controller;
 
+import com.chenlinghong.javaskso.result.CodeMsg;
+import com.chenlinghong.javaskso.result.Result;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 //@EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
-public class DemoController {
+public class DemoController<string> {
 
 //    public static void main(String[] args) throws Exception{
 //        SpringApplication.run(DemoController.class,args);
@@ -27,6 +29,18 @@ public class DemoController {
     @ResponseBody
     public String home(){
         return "Hello World!";
+    }
+
+    @GetMapping("/hello")
+    @ResponseBody
+    public Result<String> hello(){
+        return Result.success("hello springboot.");
+    }
+
+    @GetMapping("/helloerror")
+    @ResponseBody
+    public Result<String> helloError(){
+        return Result.error(CodeMsg.SERVER_ERROR);
     }
 
 }
