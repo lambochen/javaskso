@@ -3,10 +3,10 @@
 
 [imooc](https://coding.imooc.com/class/168.html)
 
-后端实现框架：SpringBoot, MyBatis, JSR303
-前端实现框架：Thymeleaf, Bootstrap, JQuery
-中间件：RabbitMQ, Redis, Druid
-数据库：MySQL
+    1）后端实现框架：SpringBoot, MyBatis, JSR303
+    2）前端实现框架：Thymeleaf, Bootstrap, JQuery
+    3）中间件：RabbitMQ, Redis, Druid
+    4）数据库：MySQL
 
 
  

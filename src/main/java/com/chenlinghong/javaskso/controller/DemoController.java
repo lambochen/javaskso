@@ -1,19 +1,15 @@
 package com.chenlinghong.javaskso.controller;
 
-import com.chenlinghong.javaskso.controller.domain.User;
+import com.chenlinghong.javaskso.domain.User;
 import com.chenlinghong.javaskso.result.CodeMsg;
 import com.chenlinghong.javaskso.result.Result;
 import com.chenlinghong.javaskso.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created with IntelliJ IDEA
@@ -62,6 +58,12 @@ public class DemoController<string> {
     @ResponseBody
     public Result<User> dbGet(){
         return Result.success(userService.getById(1));
+    }
+
+    @GetMapping("/db/tx")
+    @ResponseBody
+    public Result<Boolean> dbTx(){
+        return Result.success(userService.tx());
     }
 
 }
