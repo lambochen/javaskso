@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
  * Date: 18/09/09
  * Time: 0:36
  */
-@Service
 public interface IUserService {
 
-    public User getById(int id);
+    User getById(int id);
 }

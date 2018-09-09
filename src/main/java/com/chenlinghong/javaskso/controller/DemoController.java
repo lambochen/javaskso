@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 //@RestController
 //@EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
 @Controller
+@RequestMapping("/test")
 public class DemoController<string> {
 
 //    public static void main(String[] args) throws Exception{

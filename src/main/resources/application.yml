@@ -12,7 +12,7 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/javaskso?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/javaskso?useUnicode=true
     username: root
     password: 
     driver-class-name: com.mysql.jdbc.Driver
@@ -22,7 +22,7 @@ spring:
     initialSize: 1
     maxWait: 60000
     minidle: 1
-    timeBetweenEvictionRunsMillis: 60000
+    timeBe100tweenEvictionRunsMillis: 60000
     minEvictableIdleTimeMillis: 300000
     validationQuery: select 'x'
     testWhileIdle: true

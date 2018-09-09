@@ -4,6 +4,7 @@ import com.chenlinghong.javaskso.controller.domain.User;
 import com.chenlinghong.javaskso.dao.IUserDao;
 import com.chenlinghong.javaskso.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created with IntelliJ IDEA
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Date: 18/09/09
  * Time: 0:37
  */
+@Service
 public class UserServiceImpl implements IUserService {
 
     @Autowired
