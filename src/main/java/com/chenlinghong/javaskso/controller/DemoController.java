@@ -48,18 +48,31 @@ public class DemoController<string> {
         return Result.error(CodeMsg.SERVER_ERROR);
     }
 
+    /**
+     * 测试使用thymeleaf模板
+     * @param model
+     * @return
+     */
     @GetMapping("/thymeleaf")
     public String thymeleaf(Model model){
         model.addAttribute("name","SpringBoot");
         return "hello";
     }
 
+    /**
+     * 测试数据库获取数据
+     * @return
+     */
     @GetMapping("/db/get")
     @ResponseBody
     public Result<User> dbGet(){
         return Result.success(userService.getById(1));
     }
 
+    /**
+     * 测试数据库事务
+     * @return
+     */
     @GetMapping("/db/tx")
     @ResponseBody
     public Result<Boolean> dbTx(){
