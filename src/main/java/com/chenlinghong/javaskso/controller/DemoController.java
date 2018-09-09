@@ -1,6 +1,8 @@
 package com.chenlinghong.javaskso.controller;
 
 import com.chenlinghong.javaskso.domain.User;
+import com.chenlinghong.javaskso.redis.RedisService;
+import com.chenlinghong.javaskso.redis.UserKey;
 import com.chenlinghong.javaskso.result.CodeMsg;
 import com.chenlinghong.javaskso.result.Result;
 import com.chenlinghong.javaskso.service.IUserService;
@@ -29,6 +31,9 @@ public class DemoController<string> {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private RedisService redisService;
 
     @GetMapping("/demo")
     @ResponseBody
@@ -79,4 +84,24 @@ public class DemoController<string> {
         return Result.success(userService.tx());
     }
 
+    /**
+     * 测试redis
+     * @return
+     */
+    @RequestMapping("/redis/get")
+    @ResponseBody
+    public Result<User> redisGet(){
+        User v1 = redisService.get(UserKey.getById,""+1,User.class);
+        return Result.success(v1);
+    }
+
+    @RequestMapping("/redis/set")
+    @ResponseBody
+    public Result<Boolean> redisSet(){
+        User user = new User();
+        user.setId(1);
+        user.setName("test");
+        redisService.set(UserKey.getById,""+1,user);
+        return Result.success(true);
+    }
 }
