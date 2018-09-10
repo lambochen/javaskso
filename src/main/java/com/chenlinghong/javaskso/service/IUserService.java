@@ -4,6 +4,8 @@ import com.chenlinghong.javaskso.domain.User;
 import com.chenlinghong.javaskso.result.CodeMsg;
 import com.chenlinghong.javaskso.vo.LoginVo;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created with IntelliJ IDEA
  * Created By Mr.Chen
@@ -18,5 +20,7 @@ public interface IUserService {
 //
 //    boolean tx();
 
-    boolean login(LoginVo loginVo);
+    boolean login(HttpServletResponse response,LoginVo loginVo);
+
+    User getByToken(String token);
 }

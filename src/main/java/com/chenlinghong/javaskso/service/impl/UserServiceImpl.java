@@ -3,12 +3,19 @@ package com.chenlinghong.javaskso.service.impl;
 import com.chenlinghong.javaskso.domain.User;
 import com.chenlinghong.javaskso.dao.IUserDao;
 import com.chenlinghong.javaskso.exception.GlobalException;
+import com.chenlinghong.javaskso.redis.RedisService;
+import com.chenlinghong.javaskso.redis.UserKey;
 import com.chenlinghong.javaskso.result.CodeMsg;
 import com.chenlinghong.javaskso.service.IUserService;
 import com.chenlinghong.javaskso.util.MD5Util;
+import com.chenlinghong.javaskso.util.UUIDUtil;
 import com.chenlinghong.javaskso.vo.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created with IntelliJ IDEA
@@ -22,13 +29,18 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserDao userDao;
 
+    @Autowired
+    private RedisService redisService;
+
+    public static final String COOKIE_NAME_TOKEN = "token";
+
     @Override
     public User getById(long id) {
         return userDao.getById(id);
     }
 
     @Override
-    public boolean login(LoginVo loginVo) {
+    public boolean login(HttpServletResponse response,LoginVo loginVo) {
         if (loginVo == null) {
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
@@ -46,7 +58,27 @@ public class UserServiceImpl implements IUserService {
         if (!calcPass.equals(dbPass)){
             throw new GlobalException( CodeMsg.PASSWORD_ERROR);
         }
+        //登录成功,实现分布式session
+        String token = UUIDUtil.uuid();
+        redisService.set(UserKey.token,token,user);
+        //生成Cookie
+        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN,token);
+        //设置有效期
+        cookie.setMaxAge(UserKey.token.expireSeconds());
+        //设置域
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return true;
+    }
+
+    @Override
+    public User getByToken(String token) {
+        if (StringUtils.isEmpty(token)){
+            return null;
+        }
+        User user = redisService.get(UserKey.token,token,User.class);
+
+        return user;
     }
 
 //    @Override
