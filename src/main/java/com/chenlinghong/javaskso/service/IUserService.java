@@ -22,5 +22,5 @@ public interface IUserService {
 
     boolean login(HttpServletResponse response,LoginVo loginVo);
 
-    User getByToken(String token);
+    User getByToken(HttpServletResponse response, String token);
 }
