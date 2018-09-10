@@ -34,20 +34,21 @@ public class GoodsController {
     /**
      * 获取cookie，兼容移动端采用参数传递cookie
      * @param model
-     * @param cookieToken
-     * @param paramToken
+//     * @param cookieToken
+//     * @param paramToken
      * @return
      */
     @RequestMapping("/tolist")
     public String toList(Model model,
-                         @CookieValue(value = UserServiceImpl.COOKIE_NAME_TOKEN,required = false) String cookieToken,
-                         @RequestParam(value = UserServiceImpl.COOKIE_NAME_TOKEN,required = false) String paramToken,
-                         HttpServletResponse response){
-        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)){
-            return "login";
-        }
-        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
-        User user = userService.getByToken(response,token);
+//                         @CookieValue(value = UserServiceImpl.COOKIE_NAME_TOKEN,required = false) String cookieToken,
+//                         @RequestParam(value = UserServiceImpl.COOKIE_NAME_TOKEN,required = false) String paramToken,
+//                         HttpServletResponse response,
+                         User user){
+//        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)){
+//            return "login";
+//        }
+//        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
+//        User user = userService.getByToken(response,token);
         model.addAttribute("user",user);
         return "goods_list";
     }
