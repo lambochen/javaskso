@@ -59,13 +59,14 @@ public class UserServiceImpl implements IUserService {
             throw new GlobalException( CodeMsg.PASSWORD_ERROR);
         }
         //登录成功,实现分布式session
-        addCookie(user,response);
+        String token = UUIDUtil.uuid();
+        addCookie(user,response,token);
         return true;
     }
 
     //将Cookie生成单独抽离出来
-    private void addCookie(User user,HttpServletResponse response){
-        String token = UUIDUtil.uuid();
+    private void addCookie(User user,HttpServletResponse response,String token){
+//        String token = UUIDUtil.uuid();
         redisService.set(UserKey.token,token,user);
         //生成Cookie
         Cookie cookie = new Cookie(COOKIE_NAME_TOKEN,token);
@@ -84,7 +85,7 @@ public class UserServiceImpl implements IUserService {
         User user = redisService.get(UserKey.token,token,User.class);
         //延长token有效期
         if (user != null){
-            addCookie(user,response);
+            addCookie(user,response,token);
         }
         return user;
     }
