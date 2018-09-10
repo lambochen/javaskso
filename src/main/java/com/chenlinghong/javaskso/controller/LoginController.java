@@ -39,6 +39,9 @@ public class LoginController {
     @ResponseBody
     public Result<Boolean> doLogin(@Valid LoginVo loginVo){
         logger.info(loginVo.toString());
+
+        //采用JSR303
+        /*
         //参数校验
 //        String passInput = loginVo.getPassword();
 //        String mobile = loginVo.getMobile();
@@ -51,13 +54,20 @@ public class LoginController {
 //        if (!ValidatorUtil.isMobile(mobile)){
 //            return Result.error(CodeMsg.MOBILE_ERROR);
 //        }
+*/
+
+        //采用全局异常处理
+        /*
         //登录
-        CodeMsg codeMsg = userService.login(loginVo);
-        if (codeMsg.getCode() == 0){
-            return Result.success(true);
-        } else {
-            return Result.error(codeMsg);
-        }
+//        CodeMsg codeMsg = userService.login(loginVo);
+//        if (codeMsg.getCode() == 0){
+//            return Result.success(true);
+//        } else {
+//            return Result.error(codeMsg);
+//        }
+*/
+        userService.login(loginVo);
+        return Result.success(true);
     }
 
 

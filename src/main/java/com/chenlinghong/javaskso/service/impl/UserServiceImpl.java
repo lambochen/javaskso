@@ -2,13 +2,13 @@ package com.chenlinghong.javaskso.service.impl;
 
 import com.chenlinghong.javaskso.domain.User;
 import com.chenlinghong.javaskso.dao.IUserDao;
+import com.chenlinghong.javaskso.exception.GlobalException;
 import com.chenlinghong.javaskso.result.CodeMsg;
 import com.chenlinghong.javaskso.service.IUserService;
 import com.chenlinghong.javaskso.util.MD5Util;
 import com.chenlinghong.javaskso.vo.LoginVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created with IntelliJ IDEA
@@ -28,25 +28,25 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public CodeMsg login(LoginVo loginVo) {
+    public boolean login(LoginVo loginVo) {
         if (loginVo == null) {
-            return CodeMsg.SERVER_ERROR;
+            throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
         String mobile = loginVo.getMobile();
         String formPass = loginVo.getPassword();
         //判断手机号码是否存在
         User user = getById(Long.parseLong(mobile));
         if (user == null) {
-            return CodeMsg.MOBILE_NOT_EXISTS;
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXISTS);
         }
         //验证密码
         String dbPass = user.getPassword();
         String saltDB = user.getSalt();
         String calcPass = MD5Util.formPassToDBPass(formPass,saltDB);
         if (!calcPass.equals(dbPass)){
-            return CodeMsg.PASSWORD_ERROR;
+            throw new GlobalException( CodeMsg.PASSWORD_ERROR);
         }
-        return CodeMsg.SUCCESS;
+        return true;
     }
 
 //    @Override

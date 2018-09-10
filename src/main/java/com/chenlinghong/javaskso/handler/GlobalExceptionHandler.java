@@ -1,5 +1,6 @@
 package com.chenlinghong.javaskso.handler;
 
+import com.chenlinghong.javaskso.exception.GlobalException;
 import com.chenlinghong.javaskso.result.CodeMsg;
 import com.chenlinghong.javaskso.result.Result;
 import org.springframework.validation.BindException;
@@ -19,11 +20,14 @@ import java.util.List;
  */
 @ControllerAdvice
 @ResponseBody
-public class GlobleExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public Result<String> exceptionHandler(HttpServletRequest request,Exception e){
-        if (e instanceof BindException){
+        if (e instanceof GlobalException){
+            GlobalException globalException = (GlobalException)e;
+            return Result.error(globalException.getCodeMsg());
+        }else if (e instanceof BindException){
             BindException bindException = (BindException) e;
             List<ObjectError> errors = bindException.getAllErrors();
             //此处仅取第一个

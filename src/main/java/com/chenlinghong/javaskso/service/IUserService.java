@@ -18,5 +18,5 @@ public interface IUserService {
 //
 //    boolean tx();
 
-    CodeMsg login(LoginVo loginVo);
+    boolean login(LoginVo loginVo);
 }
