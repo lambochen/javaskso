@@ -1,6 +1,8 @@
 package com.chenlinghong.javaskso.service;
 
 import com.chenlinghong.javaskso.domain.User;
+import com.chenlinghong.javaskso.result.CodeMsg;
+import com.chenlinghong.javaskso.vo.LoginVo;
 
 /**
  * Created with IntelliJ IDEA
@@ -10,9 +12,11 @@ import com.chenlinghong.javaskso.domain.User;
  */
 public interface IUserService {
 
-    User getById(int id);
+    User getById(long id);
 
-    int insert(User user);
+//    int insert(User user);
+//
+//    boolean tx();
 
-    boolean tx();
+    CodeMsg login(LoginVo loginVo);
 }
