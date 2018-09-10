@@ -2,8 +2,10 @@ package com.chenlinghong.javaskso.controller;
 
 import com.chenlinghong.javaskso.domain.User;
 import com.chenlinghong.javaskso.redis.RedisService;
+import com.chenlinghong.javaskso.service.IGoodsService;
 import com.chenlinghong.javaskso.service.IUserService;
 import com.chenlinghong.javaskso.service.impl.UserServiceImpl;
+import com.chenlinghong.javaskso.vo.GoodsVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA
@@ -30,6 +33,9 @@ public class GoodsController {
 
     @Autowired
     private RedisService redisService;
+
+    @Autowired
+    private IGoodsService goodsService;
 
     /**
      * 获取cookie，兼容移动端采用参数传递cookie
@@ -49,7 +55,12 @@ public class GoodsController {
 //        }
 //        String token = StringUtils.isEmpty(paramToken)?cookieToken:paramToken;
 //        User user = userService.getByToken(response,token);
-        model.addAttribute("user",user);
+
+        //查询商品列表
+        List<GoodsVo> goodsVoList = goodsService.listGoodsVo();
+
+
+        model.addAttribute("goodsList",goodsVoList);
         return "goods_list";
     }
 
