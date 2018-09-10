@@ -3,6 +3,7 @@ package com.chenlinghong.javaskso.dao;
 import com.chenlinghong.javaskso.vo.GoodsVo;
 import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -16,9 +17,9 @@ import java.util.List;
 @Mapper
 public interface IGoodsDao {
 
-
     @Select("Select g.*,sg.stock_count,sg.start_date,sg.end_date,sg.seckill_price from seckill_goods sg left join goods g on sg.goods_id=g.id")
     List<GoodsVo> listGoodsVo();
 
-
+    @Select("Select g.*,sg.stock_count,sg.start_date,sg.end_date,sg.seckill_price from seckill_goods sg left join goods g on sg.goods_id=g.id where g.id=#{goodsId}")
+    GoodsVo getGoodsVoByGoodsId(@Param("goodsId") long goodsId);
 }

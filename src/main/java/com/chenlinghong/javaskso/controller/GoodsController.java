@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
@@ -39,9 +40,9 @@ public class GoodsController {
 
     /**
      * 获取cookie，兼容移动端采用参数传递cookie
-     * @param model
-//     * @param cookieToken
-//     * @param paramToken
+     *
+     * @param model //     * @param cookieToken
+     *              //     * @param paramToken
      * @return
      */
     @RequestMapping("/tolist")
@@ -49,7 +50,7 @@ public class GoodsController {
 //                         @CookieValue(value = UserServiceImpl.COOKIE_NAME_TOKEN,required = false) String cookieToken,
 //                         @RequestParam(value = UserServiceImpl.COOKIE_NAME_TOKEN,required = false) String paramToken,
 //                         HttpServletResponse response,
-                         User user){
+                         User user) {
 //        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)){
 //            return "login";
 //        }
@@ -60,8 +61,41 @@ public class GoodsController {
         List<GoodsVo> goodsVoList = goodsService.listGoodsVo();
 
 
-        model.addAttribute("goodsList",goodsVoList);
+        model.addAttribute("goodsList", goodsVoList);
         return "goods_list";
+    }
+
+
+    @RequestMapping("/todetail/{goodsId}")
+    public String toDetail(Model model, User user, @PathVariable("goodsId") long goodsId) {
+
+        //ＩＤ：ｓｎｏｗｆｌａｋｅ算法
+        GoodsVo goodsVo = goodsService.getGoodsVoByGoodsId(goodsId);
+        model.addAttribute("goods", goodsVo);
+
+        long startAt = goodsVo.getStartDate().getTime();
+        long endAt = goodsVo.getEndDate().getTime();
+        long now = System.currentTimeMillis();
+
+        int seckillStatus = 0;
+        int remainSeconds = 0;
+
+        if (now < startAt) {
+            //秒杀未开始
+            seckillStatus = 0;
+            remainSeconds = (int)(startAt - now) /1000;
+        } else if (now > endAt) {
+            //秒杀已结束
+            seckillStatus = 1;
+            remainSeconds = -1;
+        } else {
+            //秒杀进行中
+            seckillStatus = 2;
+            remainSeconds = 0;
+        }
+        model.addAttribute("seckillStatus", seckillStatus);
+        model.addAttribute("remainSeconds", remainSeconds);
+        return "goods_detail";
     }
 
 }

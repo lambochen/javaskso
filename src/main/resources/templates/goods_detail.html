@@ -45,7 +45,7 @@
         	<span th:if="${seckillStatus eq 2}">秒杀已结束</span>
         </td>
         <td>
-        	<form id="miaoshaForm" method="post" action="/seckill/do_seckill">
+        	<form id="miaoshaForm" method="post" action="/seckill/doseckill">
         		<button class="btn btn-primary btn-block" type="submit" id="buyButton">立即秒杀</button>
         		<input type="hidden" name="goodsId" th:value="${goods.id}" />
         	</form>
@@ -59,7 +59,7 @@
         <td>秒杀价</td>  
         <td colspan="3" th:text="${goods.seckillPrice}"></td>
      </tr>
-     <tr>  
+     <tr>
         <td>库存数量</td>  
         <td colspan="3" th:text="${goods.stockCount}"></td>  
      </tr>

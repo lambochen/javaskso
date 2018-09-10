@@ -14,4 +14,5 @@ public interface IGoodsService {
 
     List<GoodsVo> listGoodsVo();
 
+    GoodsVo getGoodsVoByGoodsId(long goodsId);
 }
