@@ -7,7 +7,7 @@
     2）前端实现框架：Thymeleaf, Bootstrap, JQuery
     3）中间件：RabbitMQ, Redis, Druid
     4）数据库：MySQL
-    5）压力测试：Jmeter
+    5）压力测试：Jmeter, redis-benchmark
 
 
  
